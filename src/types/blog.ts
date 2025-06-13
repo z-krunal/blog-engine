@@ -16,6 +16,10 @@ export interface BlogPost {
   showOn?: string[];
   content: string;
   mdxSource?: any;
+  authorSite: string;
+  authorLinkedin: string;
+  authorTwitter: string;
+
 }
 
 export interface BlogPostPageProps {

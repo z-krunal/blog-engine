@@ -1,6 +1,7 @@
 // components/ShareButtons.tsx
-import { useState } from 'react';
-import { Copy, Check, Linkedin, Twitter, Share2, MessageCircle } from 'lucide-react';
+import { FaLinkedin, FaWhatsapp, FaXTwitter, FaRegCopy } from "react-icons/fa6"; // or FaTwitter for old Twitter logo
+import { useState } from "react";
+import { FiShare2 } from "react-icons/fi"; // Feather share icon
 
 const baseUrl = 'https://yourdomain.com'; // 🔁 Replace with your blog's base URL
 
@@ -14,59 +15,54 @@ export default function ShareButtons({ url, title, description }: ShareButtonsPr
   const fullUrl = `${baseUrl}${url}`;
   const [copied, setCopied] = useState(false);
 
-  const handleCopy = async () => {
-    try {
-      await navigator.clipboard.writeText(fullUrl);
-      setCopied(true);
-      setTimeout(() => setCopied(false), 1500);
-    } catch (err) {
-      console.error('Copy failed:', err);
-    }
+  const handleCopy = () => {
+    navigator.clipboard.writeText(url);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 1200);
   };
 
   return (
-    <div className="flex flex-wrap gap-3 justify-center items-center text-sm text-gray-700 mt-8">
-      {/* Copy Link */}
+    <div className="flex items-center">
+      <span className="p-2 text-gray-500">
+        <FiShare2 className="text-2xl" title="Share" aria-label="Share" />
+      </span>
       <button
         onClick={handleCopy}
-        className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-gray-100 transition"
-        title="Copy link"
+        className="group p-2 rounded-full hover:bg-gray-200 transition"
+        title={copied ? "Copied!" : "Copy Link"}
+        aria-label="Copy Link"
       >
-        {copied ? <Check size={16} /> : <Copy size={16} />}
-        {copied ? 'Copied!' : 'Copy Link'}
+        <FaRegCopy className="text-xl text-gray-500 group-hover:text-gray-700" />
       </button>
-
-      {/* LinkedIn */}
       <a
-        href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(fullUrl)}&title=${encodeURIComponent(title)}&summary=${encodeURIComponent(description || '')}`}
+        href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-blue-50 transition"
+        className="group p-2 rounded-full hover:bg-blue-100 transition"
         title="Share on LinkedIn"
+        aria-label="Share on LinkedIn"
       >
-        <Linkedin size={16} /> LinkedIn
+        <FaLinkedin className="text-xl text-blue-700 group-hover:text-blue-900" />
       </a>
-
-      {/* WhatsApp */}
       <a
-        href={`https://api.whatsapp.com/send?text=${encodeURIComponent(title + '\n' + fullUrl)}`}
+        href={`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-green-50 transition"
+        className="group p-2 rounded-full hover:bg-green-100 transition"
         title="Share on WhatsApp"
+        aria-label="Share on WhatsApp"
       >
-        <MessageCircle size={16} /> WhatsApp
+        <FaWhatsapp className="text-xl text-green-600 group-hover:text-green-800" />
       </a>
-
-      {/* Twitter / X */}
       <a
-        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(fullUrl)}&text=${encodeURIComponent(title)}`}
+        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
         target="_blank"
         rel="noopener noreferrer"
-        className="flex items-center gap-2 px-4 py-2 border rounded-md hover:bg-gray-100 transition"
+        className="group p-2 rounded-full hover:bg-blue-100 transition"
         title="Share on X"
+        aria-label="Share on X"
       >
-        <Twitter size={16} /> X
+        <FaXTwitter className="text-xl text-black group-hover:text-blue-700" />
       </a>
     </div>
   );

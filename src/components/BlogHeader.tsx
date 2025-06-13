@@ -10,14 +10,10 @@ export default function BlogHeader({ post }: BlogHeaderProps) {
   return (
     
     <header className="text-center max-w-3xl mx-auto">
-        
-
         <h1>
           {post.title}
         </h1>
         
-
-
         {post.tags && post.tags.length > 0 && (
           <div className="mb-6 flex flex-wrap justify-center gap-2">
             {post.tags.map((tag) => (
@@ -33,7 +29,23 @@ export default function BlogHeader({ post }: BlogHeaderProps) {
 
         <div className="mb-6 flex flex-wrap justify-center gap-2">
           <time dateTime={post.date}>{formatDate(post.date)}</time>
-          {post.author && <span> · By {post.author}</span>}
+          {post.author && (
+          <>
+            {" · By "}
+            {post.authorLinkedin ? (
+              <a
+                href={post.authorLinkedin}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-700 hover:underline"
+              >
+                {post.author}
+              </a>
+            ) : (
+              post.author
+            )}
+          </>
+        )}
           {post.readingTime && <span> · {post.readingTime} min read</span>}
         </div>
 </header>
