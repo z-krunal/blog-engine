@@ -1,0 +1,153 @@
+---
+title: "Getting Started with Next.js and MDX"
+description: "A comprehensive guide to building modern blogs with Next.js and MDX, featuring advanced features like code highlighting, custom components, and SEO optimization."
+date: "2025-06-07"
+author: "Krunal Sabnis"
+tags: ["nextjs", "mdx", "react", "guide"]
+category: "Web Development"
+image: "/images/blog/covers/1.jpg"
+ogImage: "/images/blog/og/2.jpg"
+published: true
+canonical: "https://antphant.in/blog/test-post1"
+showOn: ["antphant"]
+---
+
+# Getting Started with Next.js and MDX
+
+Welcome to this comprehensive guide on building modern blogs with Next.js and MDX. In this post, we'll explore various features and best practices for creating engaging content.
+
+## Why Next.js and MDX?
+
+Next.js provides an excellent foundation for building modern web applications, while MDX allows us to write content in a familiar Markdown format with the power of React components.
+
+### Key Benefits
+
+1. **Performance**: Next.js's static generation capabilities
+2. **Developer Experience**: Familiar Markdown syntax
+3. **Flexibility**: React components in your content
+4. **SEO**: Built-in optimization features
+
+## Code Examples
+
+Here's a simple React component:
+
+```jsx
+function Greeting({ name }) {
+  return <h1>Hello, {name}!</h1>;
+}
+
+// Usage
+<Greeting name="World" />
+```
+
+And some TypeScript code:
+
+```typescript
+interface User {
+  id: string;
+  name: string;
+  email: string;
+}
+
+const getUser = async (id: string): Promise<User> => {
+  const response = await fetch(`/api/users/${id}`);
+  return response.json();
+};
+```
+
+## Custom Components
+
+You can use custom components in your MDX files. For example, here's a callout:
+
+<Callout type="info">
+  This is an important note about using custom components in MDX.
+</Callout>
+
+## Images and Media
+
+Always include descriptive alt text for images:
+
+![Next.js logo with a modern design](/images/nextjs-logo.png)
+
+## Tables
+
+| Feature | Description | Support |
+|---------|-------------|---------|
+| MDX | Markdown with JSX | ✅ |
+| Code Highlighting | Syntax highlighting for code blocks | ✅ |
+| Custom Components | React components in content | ✅ |
+| SEO | Meta tags and structured data | ✅ |
+
+## Lists
+
+### Unordered List
+- Item 1
+- Item 2
+  - Nested item 1
+  - Nested item 2
+- Item 3
+
+### Ordered List
+1. First step
+2. Second step
+3. Third step
+
+## Links
+
+Here are some useful resources:
+- [Next.js Documentation](https://nextjs.org/docs)
+- [MDX Documentation](https://mdxjs.com)
+- [React Documentation](https://reactjs.org)
+
+## Blockquotes
+
+> This is a blockquote. It's great for highlighting important quotes or notes.
+
+## Horizontal Rule
+
+---
+
+## Math Equations (if supported)
+
+If you have math support enabled, you can write equations:
+
+$$
+E = mc^2
+$$
+
+## Footnotes
+
+Here's a sentence with a footnote[^1].
+
+[^1]: This is the footnote content.
+
+## Task Lists
+
+- [x] Write the blog post
+- [x] Add code examples
+- [x] Include images
+- [ ] Review and edit
+- [ ] Publish
+
+## Custom MDX Components
+
+<CodeBlock
+  language="javascript"
+  code={`console.log("Hello, MDX!");`}
+  showLineNumbers
+/>
+
+<YouTubeEmbed videoId="dQw4w9WgXcQ" />
+
+## Conclusion
+
+This example demonstrates the various features supported by our blog engine. From basic Markdown syntax to advanced MDX features, you can create rich, engaging content for your readers.
+
+Remember to:
+1. Use proper heading hierarchy
+2. Include alt text for images
+3. Write descriptive link text
+4. Use code blocks with language specification
+5. Leverage custom components when needed
+
+Happy writing! 🚀 

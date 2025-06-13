@@ -1,0 +1,161 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom MDX/Markdown styles for blog content */
+.prose {
+  /* Base styles */
+  max-width: 800px;
+  margin: 0 auto;
+  color: #333;
+}
+
+/* Headings */
+.prose h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #1a1a1a;
+  margin-top: 2em;
+  margin-bottom: 1em;
+}
+
+.prose h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2a2a2a;
+  margin-top: 1.5em;
+  margin-bottom: 0.75em;
+}
+
+/* Paragraphs */
+.prose p {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  line-height: 1.75;
+}
+
+/* Blockquotes */
+.prose blockquote {
+  font-style: italic;
+  border-left: 4px solid #60a5fa;
+  background: #f0f9ff;
+  padding: 1em;
+  margin: 1.5em 0;
+  border-radius: 0.5em;
+}
+
+.prose blockquote p {
+  color: #01071a;
+  margin: 0;
+}
+
+/* Code blocks */
+.prose pre {
+  background: #f3f4f6;
+  border-radius: 0.5em;
+  padding: 1em;
+  margin: 1.5em 0;
+}
+
+.prose code {
+  color: #1a1a1a;
+  background-color: #f3f4f6;
+  padding: 0.2em 0.4em;
+  border-radius: 0.25em;
+}
+
+/* Tables */
+.prose table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2em 0;
+}
+
+.prose th,
+.prose td {
+  border: 1px solid #e5e7eb;
+  padding: 0.75em;
+}
+
+.prose th {
+  background: #f1f5f9;
+  font-weight: 700;
+}
+
+/* Lists */
+.prose ul,
+.prose ol {
+  margin-top: 1.25em;
+  margin-bottom: 1.25em;
+  padding-left: 1.5em;
+}
+
+.prose li {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+/* Links */
+.prose a {
+  color: #2563eb;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose a:hover {
+  color: #1d4ed8;
+}
+
+/* Images */
+.prose img {
+  border-radius: 0.5em;
+  box-shadow: 0 2px 8px #0001;
+  margin: 1.5em 0;
+}
+
+/* Horizontal Rule */
+.prose hr {
+  margin: 2em 0;
+  border-color: #e5e7eb;
+}
+
+
+/* Override prose styles for non-prose content */
+.not-prose {
+  /* Reset prose styles */
+  max-width: none;
+  margin: 0;
+  color: inherit;
+}
+
+.not-prose h1,
+.not-prose h2,
+.not-prose h3,
+.not-prose h4,
+.not-prose h5,
+.not-prose h6 {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: inherit;
+  color: inherit;
+}
+
+.not-prose p {
+  margin: 0;
+  padding: 0;
+  line-height: inherit;
+}
+
+.not-prose a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.not-prose img {
+  margin: 0;
+  padding: 0;
+  border-radius: 0;
+  box-shadow: none;
+}
+

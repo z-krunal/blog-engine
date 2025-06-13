@@ -1,0 +1,97 @@
+---
+title: "Agents Are the Microservices of GenAI"
+description: "If you're coming from microservices or event-driven systems, GenAI agents will feel familiar. Here's why that's your superpower."
+date: "2025-06-11"
+author: "Krunal Sabnis"
+tags: ["LLM", "LangGraph", "Microservices", "GenAI", "Architecture"]
+category: "GenAI"
+image: "covers/agents_microservices_of_genAI.png"
+ogImage: "agents_microservices_of_genAI.png"
+showOn: ["krunalsabnis"]
+
+---
+
+
+# 🧠 Agents Are the Microservices of GenAI
+
+> If you’re coming from microservices or event-driven systems, you’re more prepared for GenAI than you think. Agents aren’t a new idea — they’re just microservices with a prompt.
+
+---
+
+## 🧱 From Monoliths to Prompt Monsters
+
+In traditional software, we evolved from monolithic applications to microservices. In GenAI, we’re doing the same — moving from monolithic prompts to orchestrated agent systems.
+
+But prompt-only apps don't scale:
+- Hard to debug
+- Fragile logic
+- Hallucinations everywhere
+- One model does everything
+
+Sound familiar? That’s what we called “legacy monoliths” in backend engineering.
+
+---
+
+## 🤖 Agents = Microservices
+
+Here’s how the analogy holds:
+
+| GenAI Agent                         | Microservice Equivalent       |
+|-------------------------------------|-------------------------------|
+| One job: answer, search, summarize | Bounded responsibility        |
+| Tools (APIs, search, code, etc.)   | External dependencies         |
+| Memory (short/long term)           | Local state or cache          |
+| Composed via LangGraph             | Chained via events/queues     |
+| Retryable, observable              | Just like a resilient service |
+
+LangGraph is essentially your event-driven orchestrator.
+
+---
+
+## 💥 Hallucinations Are Runtime Errors
+
+Hallucinations aren't just prompt issues. They're often **poor coordination problems**, like:
+- Missing retrieval logic (no grounding)
+- Overloaded prompts (poor separation of concerns)
+- Lack of fallback (like no retry queue)
+
+In microservice terms: it’s a failed circuit breaker, not a bad UI.
+
+---
+
+## 📈 Scaling = Composability
+
+You don’t scale LLMs by tweaking prompts. You scale by:
+- Separating agents
+- Composing flows (LangGraph)
+- Observability (token logs, failures)
+- Explicit state transitions
+
+---
+
+## 💡 Real Example
+
+Instead of one huge prompt:
+> “Summarize this doc, score sentiment, suggest actions.”
+
+Break it into agents:
+- **Summarizer Agent**
+- **Sentiment Agent**
+- **Action Planner**
+- **LangGraph Flow** to connect them
+
+You now have: **testability, reuse, observability**.
+
+---
+
+## 🎯 Final Thought
+
+Agents aren’t just a GenAI trick — they’re architecture.  
+If you’ve worked with microservices, you already *think* in agents.  
+You’re just swapping RPC with prompt calls, and services with models.
+
+---
+
+> I write practical, systems-driven GenAI posts every week.  
+> ✨ [Read more at *my blog here*](https://krunalsabnis.com/blog)
+
