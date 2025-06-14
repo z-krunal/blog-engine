@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import { getAllPosts } from '../../mdx';
-import { generateSitemap } from '../../seo';
+import { getAllPosts } from '../../src/mdx';
+import { generateSitemap } from '../../src/seo';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {

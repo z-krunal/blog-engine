@@ -3,6 +3,7 @@ import path from 'path';
 import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
+import { BlogPost } from './types/blog';
 
 export type ContentConfig = {
   showOn?: string;
@@ -10,26 +11,6 @@ export type ContentConfig = {
   contentDirs?: string[];
   includeShared?: boolean;
   serializeContent?: boolean;
-};
-
-export type BlogPost = {
-  title: string;
-  description: string;
-  date: string;
-  author?: string;
-  tags?: string[];
-  category?: string;
-  image?: string;
-  published?: boolean;
-  readingTime?: string;
-  slug: string;
-  featured?: boolean;
-  excerpt?: string;
-  ogImage?: string;
-  canonical?: string;
-  showOn?: string[];
-  content: string;
-  mdxSource?: any;
 };
 
 // Helper function to resolve image paths

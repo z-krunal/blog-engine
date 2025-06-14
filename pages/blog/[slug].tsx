@@ -1,10 +1,10 @@
-import type { BlogPost, BlogPostPageProps } from '../../types/blog';
-import BlogHeader from '../../components/BlogHeader';
-import BlogCoverImage from '../../components/BlogCoverImage';
-import MDXContent from '../../components/MDXContent';
-import ShareButtons from '../../components/ShareButtons';
+import type { BlogPost, BlogPostPageProps } from '../../src/types/blog';
+import BlogHeader from '../../src/components/BlogHeader';
+import BlogCoverImage from '../../src/components/BlogCoverImage';
+import MDXContent from '../../src/components/MDXContent';
+import ShareButtons from '../../src/components/ShareButtons';
 import { GetStaticProps, GetStaticPaths } from 'next';
-import { getPostBySlug, getAllPosts } from '../../mdx';
+import { getPostBySlug, getAllPosts } from '../../src/mdx';
 
 export default function BlogPost({ post }: BlogPostPageProps) {
   console.log('Post data:', {

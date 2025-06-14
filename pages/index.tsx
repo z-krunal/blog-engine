@@ -1,6 +1,6 @@
-import { getAllPosts } from '../mdx';
+import { getAllPosts } from '../src/mdx';
 import Link from 'next/link';
-import type { BlogPost } from '../types/blog';
+import type { BlogPost } from '../src/types/blog';
 
 export default function Home({ posts }: { posts: BlogPost[] }) {
   return (
