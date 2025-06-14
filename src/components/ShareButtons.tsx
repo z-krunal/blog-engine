@@ -1,3 +1,4 @@
+'use client';
 // components/ShareButtons.tsx
 import { FaLinkedin, FaWhatsapp, FaXTwitter, FaRegCopy } from "react-icons/fa6"; // or FaTwitter for old Twitter logo
 import { useState } from "react";

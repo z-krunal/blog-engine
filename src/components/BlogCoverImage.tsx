@@ -1,3 +1,4 @@
+'use client';
 import ResponsiveImage from './ResponsiveImage';
 
 interface BlogCoverImageProps {
