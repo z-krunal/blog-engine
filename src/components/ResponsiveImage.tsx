@@ -39,7 +39,7 @@ export default function ResponsiveImage({
   const config = VARIANT_CONFIGS[variant];
 
   return (
-    <div className={`relative w-full ${className}`}>
+<div className="relative w-full max-h-80 flex items-center justify-center bg-white">
       <Image
         src={src}
         alt={alt}

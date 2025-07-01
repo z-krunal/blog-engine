@@ -224,4 +224,33 @@ export async function getPostBySlug(
   }
   
   throw new Error('Post not found');
+}
+
+// New utility functions for tag-based filtering
+export async function getPostsByTag(
+  tag: string,
+  config: ContentConfig = {}
+): Promise<BlogPost[]> {
+  const posts = await getAllPosts(config);
+  return posts.filter((post) => post.tags?.includes(tag));
+}
+
+export async function getPostsByCategory(
+  category: string,
+  config: ContentConfig = {}
+): Promise<BlogPost[]> {
+  const posts = await getAllPosts(config);
+  return posts.filter((post) => post.category === category);
+}
+
+export async function getAllTags(config: ContentConfig = {}): Promise<string[]> {
+  const posts = await getAllPosts(config);
+  const tags = posts.flatMap((post) => post.tags || []);
+  return Array.from(new Set(tags)).sort();
+}
+
+export async function getAllCategories(config: ContentConfig = {}): Promise<string[]> {
+  const posts = await getAllPosts(config);
+  const categories = posts.map((post) => post.category).filter((cat): cat is string => Boolean(cat));
+  return Array.from(new Set(categories)).sort();
 } 

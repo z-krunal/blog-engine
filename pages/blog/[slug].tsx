@@ -16,26 +16,35 @@ export default function BlogPost({ post }: BlogPostPageProps) {
 
   return (
     <div className="flex justify-center">
-
-    <article className="prose prose-lg max-w-2xl w-full px-4 py-8">
-    <BlogHeader post={post} />  
-
-      {post.image && <BlogCoverImage src={post.image} alt={post.title} />}
-      <MDXContent source={post.mdxSource} />
-      <ShareButtons 
-        url={`/blog/${post.slug}`}
-        title={post.title}
-        description={post.description}
-      />
-    </article>
-  </div>
-
+      <article className="max-w-2xl mx-auto bg-white rounded-lg shadow p-8">
+        <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+        <div className="text-sm text-gray-500 mb-6">
+          {post.date} • {post.author}
+        </div>
+        {post.image && (
+          <img
+            src={post.image}
+            alt={post.title}
+            className="w-full max-h-80 object-contain rounded-lg shadow mb-6 bg-white"
+            style={{ margin: '0 auto' }}
+          />
+        )}
+        <div className="prose prose-lg text-gray-800">
+          <MDXContent source={post.mdxSource} />
+        </div>
+        <ShareButtons 
+          url={`/blog/${post.slug}`}
+          title={post.title}
+          description={post.description}
+        />
+      </article>
+    </div>
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getAllPosts({
-    showOn: 'krunalsabnis', // or process.env.SITE_ID
+    showOn: process.env.SITE_ID, 
     baseDir: process.cwd()
   });
 
@@ -49,7 +58,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({ params }) => {
   const post = await getPostBySlug(params?.slug as string, {
-    showOn: 'krunalsabnis', // or process.env.SITE_ID
+    showOn: process.env.SITE_ID, // or process.env.SITE_ID
     baseDir: process.cwd()
   });
 
