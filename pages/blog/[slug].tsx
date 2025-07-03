@@ -1,8 +1,5 @@
 import type { BlogPost, BlogPostPageProps } from '../../src/types/blog';
-import BlogHeader from '../../src/components/BlogHeader';
-import BlogCoverImage from '../../src/components/BlogCoverImage';
 import MDXContent from '../../src/components/MDXContent';
-import ShareButtons from '../../src/components/ShareButtons';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { getPostBySlug, getAllPosts } from '../../src/mdx';
 
@@ -21,22 +18,10 @@ export default function BlogPost({ post }: BlogPostPageProps) {
         <div className="text-sm text-gray-500 mb-6">
           {post.date} • {post.author}
         </div>
-        {post.image && (
-          <img
-            src={post.image}
-            alt={post.title}
-            className="w-full max-h-80 object-contain rounded-lg shadow mb-6 bg-white"
-            style={{ margin: '0 auto' }}
-          />
-        )}
+ 
         <div className="prose prose-lg text-gray-800">
           <MDXContent source={post.mdxSource} />
         </div>
-        <ShareButtons 
-          url={`/blog/${post.slug}`}
-          title={post.title}
-          description={post.description}
-        />
       </article>
     </div>
   );
