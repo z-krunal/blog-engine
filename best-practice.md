@@ -32,6 +32,33 @@ ogImage: "/images/og-image.jpg"  # Required for social sharing
 ---
 ```
 
+### 2a. Centralized OGCard Component for Social Images
+All dynamic Open Graph (OG) image endpoints now use a single, reusable `OGCard` React component (`src/components/OGCard.tsx`).
+
+- This ensures a consistent, maintainable, and DRY approach for all OG/social preview images.
+- The `OGCard` component accepts `title`, `description`, and optional `subtitle` props.
+- To update the look or logic for all OG images, edit `OGCard.tsx`.
+
+**How to use in an endpoint:**
+```tsx
+import { ImageResponse } from 'next/og';
+import OGCard from '../../components/OGCard';
+
+export default function OGImage() {
+  return new ImageResponse(
+    <OGCard
+      title="Your Title"
+      description="Your description"
+      subtitle="Optional subtitle"
+    />, {
+      width: 1200,
+      height: 630,
+    }
+  );
+}
+```
+- All endpoints for site, blog, post, tag, and category OG images now use this pattern.
+
 ### 3. Structured Data (JSON-LD)
 The blog engine automatically generates JSON-LD structured data for blog posts. No additional configuration needed in MDX files.
 

@@ -66,15 +66,7 @@ async function getContentDirs(baseDir: string, config: ContentConfig): Promise<s
   }
   
   // Add shared content directory if includeShared is true (default)
-  if (includeShared !== false) {
-    const sharedContentPath = path.join(baseDir, 'shared/content/blog');
-    try {
-      await fs.access(sharedContentPath);
-      dirs.push(sharedContentPath);
-    } catch (error) {
-      console.warn(`Warning: Could not access shared content directory ${sharedContentPath}:`, error);
-    }
-  }
+
   
   return dirs;
 }
