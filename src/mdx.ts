@@ -4,6 +4,7 @@ import matter from 'gray-matter';
 import { serialize } from 'next-mdx-remote/serialize';
 import remarkGfm from 'remark-gfm';
 import { BlogPost } from './types/blog';
+import { normalizeCategory } from './utils';
 
 export type ContentConfig = {
   showOn?: string;
@@ -228,11 +229,11 @@ export async function getPostsByTag(
 }
 
 export async function getPostsByCategory(
-  category: string,
+  categorySlug: string,
   config: ContentConfig = {}
 ): Promise<BlogPost[]> {
   const posts = await getAllPosts(config);
-  return posts.filter((post) => post.category === category);
+  return posts.filter((post) => normalizeCategory(post.category || '') === categorySlug);
 }
 
 export async function getAllTags(config: ContentConfig = {}): Promise<string[]> {
@@ -245,4 +246,12 @@ export async function getAllCategories(config: ContentConfig = {}): Promise<stri
   const posts = await getAllPosts(config);
   const categories = posts.map((post) => post.category).filter((cat): cat is string => Boolean(cat));
   return Array.from(new Set(categories)).sort();
+}
+
+export async function getAllCategoriesWithSlugs(config: ContentConfig = {}): Promise<Array<{ name: string; slug: string }>> {
+  const categories = await getAllCategories(config);
+  return categories.map(category => ({
+    name: category,
+    slug: normalizeCategory(category)
+  }));
 } 
