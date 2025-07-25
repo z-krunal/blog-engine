@@ -5,21 +5,20 @@ export interface BlogPost {
   author?: string;
   tags?: string[];
   category?: string;
-  image?: string;
+  image?: string | null;
   published?: boolean;
   readingTime?: string;
   slug: string;
   featured?: boolean;
   excerpt?: string;
-  ogImage?: string;
+  ogImage?: string | null;
   canonical?: string;
   showOn?: string[];
   content: string;
   mdxSource?: any;
-  authorSite: string;
-  authorLinkedin: string;
-  authorTwitter: string;
-
+  authorSite?: string;
+  authorLinkedin?: string;
+  authorTwitter?: string;
 }
 
 export interface BlogPostPageProps {

@@ -1,5 +1,5 @@
 import type { BlogPost, BlogPostPageProps } from '../../src/types/blog';
-import MDXContent from '../../src/components/MDXContent';
+import BlogPostLayout from '../../src/components/BlogPostLayout';
 import { GetStaticProps, GetStaticPaths } from 'next';
 import { getPostBySlug, getAllPosts } from '../../src/mdx';
 
@@ -12,25 +12,19 @@ export default function BlogPost({ post }: BlogPostPageProps) {
   });
 
   return (
-    <div className="flex justify-center">
-      <article className="max-w-2xl mx-auto bg-white rounded-lg shadow p-8">
-        <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
-        <div className="text-sm text-gray-500 mb-6">
-          {post.date} • {post.author}
-        </div>
- 
-        <div className="prose prose-lg text-gray-800">
-          <MDXContent source={post.mdxSource} />
-        </div>
-      </article>
-    </div>
+    <BlogPostLayout 
+      post={post} 
+      showShareButtons={true}
+      baseUrl="http://localhost:3000"
+    />
   );
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const posts = await getAllPosts({
-    showOn: process.env.SITE_ID, 
-    baseDir: process.cwd()
+    showOn: 'krunalsabnis', 
+    baseDir: process.cwd(),
+    contentDirs: ['../sites/krunalsabnis/content/blog']
   });
 
   return {
@@ -43,8 +37,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps<BlogPostPageProps> = async ({ params }) => {
   const post = await getPostBySlug(params?.slug as string, {
-    showOn: process.env.SITE_ID, // or process.env.SITE_ID
-    baseDir: process.cwd()
+    showOn: 'krunalsabnis',
+    baseDir: process.cwd(),
+    contentDirs: ['../sites/krunalsabnis/content/blog']
   });
 
   return {

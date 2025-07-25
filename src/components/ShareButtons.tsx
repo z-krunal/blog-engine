@@ -1,70 +1,61 @@
 'use client';
-// components/ShareButtons.tsx
-import { FaLinkedin, FaWhatsapp, FaXTwitter, FaRegCopy } from "react-icons/fa6"; // or FaTwitter for old Twitter logo
-import { useState } from "react";
-import { FiShare2 } from "react-icons/fi"; // Feather share icon
 
-const baseUrl = 'https://yourdomain.com'; // 🔁 Replace with your blog's base URL
+import { LinkedinShareButton, WhatsappShareButton, TwitterShareButton, LinkedinIcon, WhatsappIcon, TwitterIcon } from "next-share";
 
-type ShareButtonsProps = {
-  url: string; // e.g., `/blog/my-post`
-  title: string;
-  description?: string;
-};
+interface ShareButtonsProps {
+  postUrl: string;
+  postTitle: string;
+  className?: string;
+}
 
-export default function ShareButtons({ url, title, description }: ShareButtonsProps) {
-  const fullUrl = `${baseUrl}${url}`;
-  const [copied, setCopied] = useState(false);
-
-  const handleCopy = () => {
-    navigator.clipboard.writeText(url);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1200);
-  };
-
+export default function ShareButtons({ postUrl, postTitle, className = '' }: ShareButtonsProps) {
   return (
-    <div className="flex items-center">
-      <span className="p-2 text-gray-500">
-        <FiShare2 className="text-2xl" title="Share" aria-label="Share" />
-      </span>
-      <button
-        onClick={handleCopy}
-        className="group p-2 rounded-full hover:bg-gray-200 transition"
-        title={copied ? "Copied!" : "Copy Link"}
-        aria-label="Copy Link"
-      >
-        <FaRegCopy className="text-xl text-gray-500 group-hover:text-gray-700" />
-      </button>
-      <a
-        href={`https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(url)}&title=${encodeURIComponent(title)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group p-2 rounded-full hover:bg-blue-100 transition"
-        title="Share on LinkedIn"
-        aria-label="Share on LinkedIn"
-      >
-        <FaLinkedin className="text-xl text-blue-700 group-hover:text-blue-900" />
-      </a>
-      <a
-        href={`https://wa.me/?text=${encodeURIComponent(title + ' ' + url)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group p-2 rounded-full hover:bg-green-100 transition"
-        title="Share on WhatsApp"
-        aria-label="Share on WhatsApp"
-      >
-        <FaWhatsapp className="text-xl text-green-600 group-hover:text-green-800" />
-      </a>
-      <a
-        href={`https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="group p-2 rounded-full hover:bg-blue-100 transition"
-        title="Share on X"
-        aria-label="Share on X"
-      >
-        <FaXTwitter className="text-xl text-black group-hover:text-blue-700" />
-      </a>
-    </div>
+    <>
+      {/* Floating on right for desktop */}
+      <div className={`hidden lg:flex flex-col gap-3 fixed top-1/3 right-8 z-30 bg-white/90 rounded-lg shadow p-3 border border-gray-200 ${className}`}>
+        <LinkedinShareButton url={postUrl} title={postTitle}>
+          <LinkedinIcon size={32} round />
+        </LinkedinShareButton>
+        <WhatsappShareButton url={postUrl} title={postTitle}>
+          <WhatsappIcon size={32} round />
+        </WhatsappShareButton>
+        <TwitterShareButton url={postUrl} title={postTitle}>
+          <TwitterIcon size={32} round />
+        </TwitterShareButton>
+        <button
+          onClick={() => navigator.clipboard.writeText(postUrl)}
+          className="mt-2 text-xs text-gray-500 hover:text-blue-700"
+          title="Copy Link"
+        >
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15v-6a2 2 0 0 1 2-2h6"/>
+          </svg>
+        </button>
+      </div>
+      
+      {/* Bottom bar for mobile */}
+      <div className="lg:hidden flex gap-4 justify-center items-center w-full py-4 border-t mt-8 bg-white sticky bottom-0 z-20">
+        <LinkedinShareButton url={postUrl} title={postTitle}>
+          <LinkedinIcon size={32} round />
+        </LinkedinShareButton>
+        <WhatsappShareButton url={postUrl} title={postTitle}>
+          <WhatsappIcon size={32} round />
+        </WhatsappShareButton>
+        <TwitterShareButton url={postUrl} title={postTitle}>
+          <TwitterIcon size={32} round />
+        </TwitterShareButton>
+        <button
+          onClick={() => navigator.clipboard.writeText(postUrl)}
+          className="text-xs text-gray-500 hover:text-blue-700"
+          title="Copy Link"
+        >
+          <svg className="w-7 h-7" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15v-6a2 2 0 0 1 2-2h6"/>
+          </svg>
+        </button>
+      </div>
+    </>
   );
 }

@@ -57,17 +57,35 @@ async function getContentDirs(baseDir: string, config: ContentConfig): Promise<s
   
   // Add site-specific content directory if showOn is provided
   if (showOn) {
-    const siteContentPath = path.join(baseDir, 'sites', showOn, 'content/blog');
-    try {
-      await fs.access(siteContentPath);
-      dirs.push(siteContentPath);
-    } catch (error) {
-      console.warn(`Warning: Could not access site content directory ${siteContentPath}:`, error);
+    // Try multiple possible paths for site content
+    const possiblePaths = [
+      path.join(baseDir, 'sites', showOn, 'content/blog'),
+      path.join(baseDir, '..', 'sites', showOn, 'content/blog'),
+      path.join(baseDir, '..', '..', 'sites', showOn, 'content/blog'),
+    ];
+    
+    for (const siteContentPath of possiblePaths) {
+      try {
+        await fs.access(siteContentPath);
+        dirs.push(siteContentPath);
+        console.log(`Found content directory: ${siteContentPath}`);
+        break; // Use the first valid path
+      } catch (error) {
+        console.warn(`Warning: Could not access site content directory ${siteContentPath}:`, error);
+      }
     }
   }
   
   // Add shared content directory if includeShared is true (default)
-
+  if (includeShared !== false) {
+    const sharedContentPath = path.join(baseDir, 'sites', 'shared', 'content/blog');
+    try {
+      await fs.access(sharedContentPath);
+      dirs.push(sharedContentPath);
+    } catch (error) {
+      console.warn(`Warning: Could not access shared content directory ${sharedContentPath}:`, error);
+    }
+  }
   
   return dirs;
 }
@@ -88,6 +106,7 @@ export async function getAllPosts(config: ContentConfig = {}): Promise<BlogPost[
         const files = await fs.readdir(dir);
         return Promise.all(
           files.filter((f: string) => f.endsWith('.mdx')).map(async (filename: string) => {
+            try {
             const filePath = path.join(dir, filename);
             const rawContent = await fs.readFile(filePath, 'utf-8');
             const { data: frontmatter, content } = matter(rawContent);
@@ -128,10 +147,14 @@ export async function getAllPosts(config: ContentConfig = {}): Promise<BlogPost[
               content: processedContent,
               readingTime,
               excerpt,
-              image,
-              ogImage,
+              image: image || null,
+              ogImage: ogImage || null,
               mdxSource,
             } as BlogPost;
+          } catch (error) {
+            console.error(`Error processing file ${filename}:`, error);
+            return null;
+          }
           })
         );
       } catch (error) {
@@ -143,9 +166,12 @@ export async function getAllPosts(config: ContentConfig = {}): Promise<BlogPost[
 
   // Flatten and filter posts
   const posts = allPosts.flat();
-  return posts.filter((post: BlogPost) =>
-    !showOn || !post.showOn || post.showOn.length === 0 || post.showOn.includes(showOn)
-  );
+  return posts
+    .filter((post): post is BlogPost => post !== null) // Remove null values
+    .filter((post: BlogPost) => post.title && post.slug) // Ensure required fields exist
+    .filter((post: BlogPost) =>
+      !showOn || !post.showOn || post.showOn.length === 0 || post.showOn.includes(showOn)
+    );
 }
 
 export async function getPostBySlug(
@@ -207,8 +233,8 @@ export async function getPostBySlug(
           readingTime,
           excerpt,
           mdxSource,
-          image,
-          ogImage,
+          image: image || null,
+          ogImage: ogImage || null,
         } as BlogPost;
       }
     } catch (error) {
