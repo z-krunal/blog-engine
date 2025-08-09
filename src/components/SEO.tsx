@@ -1,52 +1,121 @@
 import Head from 'next/head';
-import { BlogPost } from '../mdx';
-import { generateMetaTags, generateStructuredData } from '../seo';
+import type { BlogPost } from '../types/blog';
 
 interface SEOProps {
-  post: BlogPost;
-  siteUrl: string;
+  title?: string;
+  description?: string;
+  canonical?: string;
+  image?: string;
+  type?: 'website' | 'article';
+  publishedTime?: string;
+  modifiedTime?: string;
+  author?: string;
+  tags?: string[];
+  post?: BlogPost;
+  baseUrl?: string;
 }
 
-export default function SEO({ post, siteUrl }: SEOProps) {
-  const metaTags = generateMetaTags(post, siteUrl);
-  const structuredData = generateStructuredData(post, siteUrl);
+export default function SEO({
+  title,
+  description,
+  canonical,
+  image,
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  author,
+  tags,
+  post,
+  baseUrl = 'https://example.com'
+}: SEOProps) {
+  // Use post data if available
+  const finalTitle = title || post?.title || 'Blog';
+  const finalDescription = description || post?.description || 'Blog post';
+  const finalImage = image || post?.image || `${baseUrl}/og-default.png`;
+  const finalCanonical = canonical || (post ? `${baseUrl}/blog/${post.slug}` : `${baseUrl}/blog`);
+  const finalAuthor = author || post?.author;
+  const finalTags = tags || post?.tags || [];
+  const finalPublishedTime = publishedTime || post?.date;
+  const finalModifiedTime = modifiedTime || post?.date; // Using date as fallback since lastModified doesn't exist
+
+  // Generate structured data
+  const structuredData = post ? {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: finalTitle,
+    description: finalDescription,
+    image: finalImage,
+    author: {
+      '@type': 'Person',
+      name: finalAuthor || 'Unknown Author'
+    },
+    publisher: {
+      '@type': 'Organization',
+      name: 'Blog',
+      logo: {
+        '@type': 'ImageObject',
+        url: `${baseUrl}/logo.png`
+      }
+    },
+    datePublished: finalPublishedTime,
+    dateModified: finalModifiedTime || finalPublishedTime,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': finalCanonical
+    },
+    keywords: finalTags.join(', '),
+    articleSection: post.category,
+    url: finalCanonical
+  } : {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    name: finalTitle,
+    description: finalDescription,
+    url: finalCanonical
+  };
 
   return (
     <Head>
-      <title>{metaTags.title}</title>
-      <meta name="description" content={metaTags.description} />
-      <link rel="canonical" href={metaTags.canonical} />
+      {/* Basic Meta Tags */}
+      <title>{finalTitle}</title>
+      <meta name="description" content={finalDescription} />
+      <meta name="keywords" content={finalTags.join(', ')} />
+      <link rel="canonical" href={finalCanonical} />
 
       {/* Open Graph */}
-      <meta property="og:title" content={metaTags.openGraph.title} />
-      <meta property="og:description" content={metaTags.openGraph.description} />
-      <meta property="og:url" content={metaTags.openGraph.url} />
-      <meta property="og:type" content={metaTags.openGraph.type} />
-      <meta property="og:published_time" content={metaTags.openGraph.publishedTime} />
-      {metaTags.openGraph.authors.map((author, index) => (
-        <meta key={index} property="og:author" content={author} />
+      <meta property="og:type" content={type} />
+      <meta property="og:title" content={finalTitle} />
+      <meta property="og:description" content={finalDescription} />
+      <meta property="og:url" content={finalCanonical} />
+      <meta property="og:image" content={finalImage} />
+      <meta property="og:site_name" content="Blog" />
+      {finalAuthor && <meta property="og:author" content={finalAuthor} />}
+      {finalPublishedTime && <meta property="article:published_time" content={finalPublishedTime} />}
+      {finalModifiedTime && <meta property="article:modified_time" content={finalModifiedTime} />}
+      {finalTags.map(tag => (
+        <meta key={tag} property="article:tag" content={tag} />
       ))}
-      {metaTags.openGraph.images.map((image, index) => (
-        <meta key={index} property="og:image" content={image.url} />
-      ))}
-      <meta property="og:image:width" content={metaTags.openGraph.images[0].width.toString()} />
-      <meta property="og:image:height" content={metaTags.openGraph.images[0].height.toString()} />
-      <meta property="og:image:alt" content={metaTags.openGraph.images[0].alt} />
 
-      {/* Twitter */}
-      <meta name="twitter:card" content={metaTags.twitter.card} />
-      <meta name="twitter:title" content={metaTags.twitter.title} />
-      <meta name="twitter:description" content={metaTags.twitter.description} />
-      {metaTags.twitter.images.map((image, index) => (
-        <meta key={index} name="twitter:image" content={image} />
-      ))}
-      <meta name="twitter:creator" content={metaTags.twitter.creator} />
+      {/* Twitter Cards */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={finalTitle} />
+      <meta name="twitter:description" content={finalDescription} />
+      <meta name="twitter:image" content={finalImage} />
 
+      {/* Additional SEO */}
+      <meta name="robots" content="index, follow" />
+      <meta name="viewport" content="width=device-width, initial-scale=1" />
+      
       {/* Structured Data */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(structuredData)
+        }}
       />
+
+      {/* RSS Feed */}
+      <link rel="alternate" type="application/rss+xml" title="RSS Feed" href={`${baseUrl}/rss.xml`} />
     </Head>
   );
 } 

@@ -12,6 +12,9 @@ export { default as ResponsiveImage } from './components/ResponsiveImage';
 export { default as SEO } from './components/SEO';
 export { default as ShareButtons } from './components/ShareButtons';
 
+// Utilities
+export { generateRSSFeed } from './utils/rss';
+
 // Types
 export * from './types/blog';
 
