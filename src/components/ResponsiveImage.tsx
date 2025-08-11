@@ -39,7 +39,7 @@ export default function ResponsiveImage({
   const config = VARIANT_CONFIGS[variant];
 
   return (
-<div className="relative w-full max-h-80 flex items-center justify-center bg-white">
+    <span className="relative w-full max-h-80 flex items-center justify-center bg-white block">
       <Image
         src={src}
         alt={alt}
@@ -58,6 +58,6 @@ export default function ResponsiveImage({
         quality={90}
         sizes={config.sizes}
       />
-    </div>
+    </span>
   );
 } 
