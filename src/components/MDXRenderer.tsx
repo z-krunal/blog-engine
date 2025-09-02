@@ -4,6 +4,7 @@ import { MDXRemote, MDXRemoteSerializeResult } from 'next-mdx-remote';
 import { MDXProvider } from '@mdx-js/react';
 import ResponsiveImage from './ResponsiveImage';
 import Callout from './Callout';
+import CTAButton from './CTAButton';
 import { DetailedHTMLProps, ImgHTMLAttributes } from 'react';
 
 export type MDXRendererProps = {
@@ -18,6 +19,7 @@ const defaultComponents = {
     return <ResponsiveImage src={src} alt={alt} variant="natural" className="my-8" />;
   },
   Callout: Callout,
+  CTAButton: CTAButton,
 };
 
 export default function MDXRenderer({ source, components }: MDXRendererProps) {
