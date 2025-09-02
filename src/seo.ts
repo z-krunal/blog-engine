@@ -1,4 +1,4 @@
-import { BlogPost } from './mdx';
+import { BlogPost } from './types/blog';
 
 export function generateMetaTags(post: BlogPost, siteUrl: string) {
   const url = `${siteUrl}/blog/${post.slug}`;
